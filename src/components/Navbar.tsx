@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -15,9 +14,9 @@ const Navbar: React.FC = () => {
   return (
     <div className="navbar">
       <Link to="/">Home</Link>
+      <Link to="/notes">Notes</Link>
       {user ? (
         <>
-          <Link to="/notes">Notes</Link>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (

@@ -21,7 +21,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="center-container">
+    <div className="login-center">
       <form onSubmit={handleLogin} className="login-container">
         <h2>Login</h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
