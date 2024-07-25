@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { firestore, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
-interface Note {
-  id: string;
-  content: string;
-  author: string;
-}
+import { Note } from './types';
 
 interface NoteCardProps {
   note: Note;

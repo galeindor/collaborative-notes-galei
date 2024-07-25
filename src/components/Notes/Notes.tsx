@@ -3,12 +3,9 @@ import { collection, query, onSnapshot } from 'firebase/firestore';
 import { firestore } from '../../firebase';
 import AddNote from './AddNote';
 import NotesList from './NotesList';
-
-interface Note {
-  id: string;
-  content: string;
-  author: string;
-}
+import { Note } from './types';
+import AddSubject from './AddSubject';
+import './notes.css';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -29,6 +26,7 @@ const Notes: React.FC = () => {
   return (
     <div className="notes-container">
       <AddNote />
+      <AddSubject onAdd={(newSubject) => setNotes([...notes, { id: new Date().toISOString(), content: '', author: '', subject: newSubject } as Note])} />
       <NotesList notes={notes} />
     </div>
   );

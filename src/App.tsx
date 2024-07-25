@@ -4,7 +4,7 @@ import Login from './components/Login';
 import Notes from './components/Notes/Notes';
 import Navbar from './components/Navbar';
 import './index.css';
-import Home from './components/Notes/Home';
+import Home from './components/Home';
 
 const App: React.FC = () => {
   return (
