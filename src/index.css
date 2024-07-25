@@ -197,7 +197,7 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.login-container input, .add-note textarea, .add-subject input, .edit-textarea, select {
+.login-container input, .add-note textarea, .add-subject input, select {
   padding: 10px;
   border: none;
   border-radius: 5px;
