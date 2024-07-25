@@ -1,75 +1,127 @@
+/* src/styles.css */
 body {
+  background-color: #121212;
+  color: #ffffff;
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #f4f4f4;
 }
 
-/* Centering Utility */
 .center-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
 }
 
-/* Login Styles */
-.login-container {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 400px;
+.login-container, .add-note {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.login-container input {
-  display: block;
-  width: 93%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  margin-right: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.login-container button {
-  width: 100%;
-  padding: 0.75rem;
+.login-container input, .add-note textarea {
+  padding: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.login-container button, .add-note button {
+  padding: 10px;
   background-color: #007bff;
   color: white;
-  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.login-container button:hover {
+.login-container button:hover, .add-note button:hover {
   background-color: #0056b3;
 }
 
-/* Notes Styles */
 .notes-container {
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  padding: 20px;
+  min-height: 100vh; /* Ensure it takes full height of the viewport */
+  background-color: #121212;
 }
 
+/* Note creation form */
+.add-note {
+  width: 100%;
+  max-width: 400px; /* Smaller max width */
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-note textarea {
+  width: 100%;
+  height: 80px; /* Slightly smaller height */
+  resize: none; /* Disable resizing */
+}
+
+.add-note button {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Notes list */
+.notes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Note card */
 .note-card {
-  background-color: white;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #1e1e1e;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  width: 200px;
 }
 
-.note-card p {
-  margin: 0;
+.note-card button {
+  padding: 5px 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  .login-container,
-  .note-card {
-    padding: 1rem;
-  }
+.note-card button:hover {
+  background-color: darkred;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.navbar a:hover {
+  background-color: #333333;
+  border-radius: 5px;
 }

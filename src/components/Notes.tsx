@@ -1,16 +1,19 @@
 // src/components/Notes.tsx
-import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
-import { collection, addDoc, query, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import React, { useState, useEffect } from 'react';
+import { collection, addDoc, query, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
+import { firestore, auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 interface Note {
   id: string;
   content: string;
+  author: string;
 }
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [newNote, setNewNote] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const q = query(collection(firestore, 'notes'));
@@ -25,47 +28,46 @@ const Notes: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  const addNote = async (e: FormEvent) => {
-    e.preventDefault();
-    if (newNote.trim() === '') return;
-    try {
-      const docRef = await addDoc(collection(firestore, 'notes'), {
-        content: newNote
-      });
-      setNewNote('');
-      console.log('Document written with ID: ', docRef.id);
-    } catch (error) {
-      console.error('Error adding document: ', error);
+  const handleAddNote = async () => {
+    if (!user) {
+      alert('You must be logged in to add a note');
+      return;
     }
+
+    await addDoc(collection(firestore, 'notes'), {
+      content,
+      author: user.uid,
+    });
+
+    setContent('');
   };
 
-  const deleteNote = async (id: string) => {
-    try {
-      await deleteDoc(doc(firestore, 'notes', id));
-    } catch (error) {
-      console.error('Error deleting document: ', error);
-    }
+  const handleDeleteNote = async (id: string) => {
+    await deleteDoc(doc(firestore, 'notes', id));
   };
 
   return (
     <div className="notes-container">
-      <form onSubmit={addNote}>
-        <input
-          type="text"
-          value={newNote}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setNewNote(e.target.value)}
-          placeholder="New Note"
-        />
-        <button type="submit">Add Note</button>
-      </form>
-      <ul>
-        {notes.map(note => (
-          <li key={note.id} className="note-card">
+      {user && (
+        <div className="add-note">
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Write a note..."
+          />
+          <button onClick={handleAddNote}>Add Note</button>
+        </div>
+      )}
+      <div className="notes-list">
+        {notes.map((note) => (
+          <div key={note.id} className="note-card">
             <p>{note.content}</p>
-            <button onClick={() => deleteNote(note.id)}>Delete</button>
-          </li>
+            {note.author === user?.uid && (
+              <button onClick={() => handleDeleteNote(note.id)}>Delete</button>
+            )}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
