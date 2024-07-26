@@ -1,8 +1,8 @@
-/* src/styles.css */
 body {
   background-color: #121212;
   color: #ffffff;
   font-family: Arial, sans-serif;
+  font-size: 1.2rem;
   margin: 0;
   height: 100%;
 }

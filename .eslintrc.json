@@ -1,0 +1,20 @@
+{
+  "extends": ["next/core-web-vitals", "prettier", "airbnb"],
+  "rules": {
+    "max-len": ["error", { "code": 120 }],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "import/extensions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/require-default-props": "off",
+    "no-param-reassign": "off",
+    "prefer-destructuring": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-no-bind": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "linebreak-style": "off"
+  }
+}

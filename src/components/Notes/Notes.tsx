@@ -1,14 +1,20 @@
+// src/components/Notes.tsx
 import React, { useState, useEffect } from 'react';
-import { collection, query, onSnapshot } from 'firebase/firestore';
-import { firestore } from '../../firebase';
-import AddNote from './AddNote';
-import NotesList from './NotesList';
-import { Note } from './types';
-import AddSubject from './AddSubject';
+import { collection, addDoc, query, onSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { firestore, auth } from '../../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import NoteItem from './NoteItem';
 import './notes.css';
+import { Note } from './types';
+import AddNote from './AddNote';
+import AddSubject from './AddSubject';
+
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [subjects, setSubjects] = useState<string[]>([]);
+  const [newSubject, setNewSubject] = useState<string>('');
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const q = query(collection(firestore, 'notes'));
@@ -20,14 +26,49 @@ const Notes: React.FC = () => {
       setNotes(notesData);
     });
 
-    return () => unsubscribe();
+    // Fetch subjects
+    const subjectsQuery = query(collection(firestore, 'subjects'));
+    const unsubscribeSubjects = onSnapshot(subjectsQuery, (querySnapshot) => {
+      const subjectsData: string[] = [];
+      querySnapshot.forEach((doc) => {
+        subjectsData.push(doc.id);
+      });
+      setSubjects(subjectsData);
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeSubjects();
+    };
   }, []);
+
+  const handleDeleteNote = async (id: string) => {
+    await deleteDoc(doc(firestore, 'notes', id));
+  };
+
+  const handleEditNote = async (id: string, newContent: string) => {
+    await updateDoc(doc(firestore, 'notes', id), { content: newContent });
+  };
 
   return (
     <div className="notes-container">
-      <AddNote />
-      <AddSubject onAdd={(newSubject) => setNotes([...notes, { id: new Date().toISOString(), content: '', author: '', subject: newSubject } as Note])} />
-      <NotesList notes={notes} />
+      {user && (
+        <div className="add-note-subject-container">
+          <AddNote />
+          <AddSubject onAdd={() => {}} />
+        </div>
+      )}
+      <div className="notes-list">
+        {notes.map((note) => (
+          <NoteItem
+            key={note.id}
+            note={note}
+            currentUser={user?.uid}
+            onDelete={handleDeleteNote}
+            onEdit={handleEditNote}
+          />
+        ))}
+      </div>
     </div>
   );
 };
