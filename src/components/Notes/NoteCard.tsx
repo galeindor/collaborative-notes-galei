@@ -45,39 +45,47 @@ const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
     }
   };
 
-    return (
-    <div className="note-card">
-      <div className="note-card-header">
-        {note.author === user?.uid && (
-          <button className="note-card-delete-button" onClick={() => handleDeleteNote()}>
-            <AiOutlineClose />
-          </button>
-        )}
-      </div>
+  return (
+    <div className="note-item">
+      <div className="note-content">
         {isEditing ? (
           <div onKeyDown={handleKeyDown}>
-        <textarea
-          value={newContent}
-          className="edit-textarea"
-          autoFocus
+            <textarea
+              value={newContent}
+              onChange={handleContentChange}
+              className="edit-textarea"
+              autoFocus
             />
-            <SubjectSelector subject={newSubject} setSubject={setNewSubject} />
-            </div>
+          </div>
         ) : (
-            <div>
-            <p className="note-card-content" onDoubleClick={() => setIsEditing(true)}>
-              {newContent}
-                </p>
-            <p className="note-card-subject" onDoubleClick={() => setIsEditing(true)}>
-                {newSubject}
-                  </p>
-        </div>
-      )}
-      {note.author === user?.uid && !isEditing && (
-        <button className="note-card-edit-button" onClick={() => setIsEditing(true)}>
-          <AiOutlineEdit />
-        </button>
-      )}
+          <>
+            <p className="note-card-content">{newContent}</p>
+          </>
+        )}
+      </div>
+      <div className="note-actions">
+        {isEditing ? (
+          <SubjectSelector subject={newSubject} setSubject={setNewSubject} />
+        ) : (
+          <p className="note-card-subject">{newSubject}</p>
+        )}
+        {note.author === user?.uid && (
+          <>
+            <button
+              className="note-edit-button"
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              <AiOutlineEdit />
+            </button>
+            <button
+              className="note-delete-button"
+              onClick={handleDeleteNote}
+            >
+              <AiOutlineClose />
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

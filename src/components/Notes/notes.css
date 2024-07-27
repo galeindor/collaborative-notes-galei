@@ -1,6 +1,13 @@
 /* src/notes.css */
 
-/* Add Note and Subject */
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  padding: 20px;
+  min-height: 100vh; /* Ensure it takes full height of the viewport */
+}
+
 .add-note-subject-container {
   display: flex;
   font-size: 1.2rem;
@@ -28,7 +35,6 @@
 }
 
 .add-note textarea, .add-subject input {
-  width: 100%;
   padding: 10px;
   border-radius: 5px;
   background-color: #333333;
@@ -46,9 +52,10 @@
 }
 
 .add-note button, .add-subject button {
+  width: 100%;
   padding: 10px;
-  background-color: #6ba6e8;
-  color: rgb(52, 103, 125);
+  background-color: rgb(15, 57, 73);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -56,6 +63,10 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
+}
+
+.add-note button:hover, .add-subject button:hover {
+  background-color: #4a7abf;
 }
 
 .notes-list {
@@ -76,15 +87,28 @@
   position: relative;
 }
 
+.add-note textarea {
+  width: 95%;
+  height: 80px; /* Slightly smaller height */
+  resize: none; /* Disable resizing */
+}
+
 .note-content {
   flex: 1;
   color: #ffffff;
   margin-right: 10px;
-  text-align: center;
+  text-align: left; /* Align text to the left */
+}
+
+.note-subject {
+  color: #a0a0a0;
+  font-size: 1.2rem;
+  text-align: right;
+  margin-left: 10px;
 }
 
 .edit-textarea {
-  width: 100%;
+  width: 95%;
   margin: 0 10px;
   height: 30px;
   padding: 10px;
@@ -131,11 +155,14 @@
 }
 
 .note-edit-button:hover {
-  background-color: blue;
+  background-color: #4a7abf;
 }
 
-.note-subject {
-  color: #a0a0a0;
-  font-size: 1.2rem;
-  text-align: right;
+textarea, input {
+  width: 100%;
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
 }

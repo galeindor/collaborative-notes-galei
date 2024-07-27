@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
       <Link to="/notes">Notes</Link>
       {user ? (
         <>
-          <button onClick={handleLogout}>Logout</button>
+          <button className='logout-button' onClick={handleLogout}>Logout</button>
         </>
       ) : (
         <Link to="/login">Login</Link>
