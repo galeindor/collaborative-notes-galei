@@ -42,9 +42,11 @@
   border: none;
 }
 
-.add-note select {
+
+.notes-container select {
   width: 100%;
   padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
   background-color: #333333;
   color: #ffffff;
@@ -87,6 +89,10 @@
   position: relative;
 }
 
+.note-item:hover {
+ animation: note-hover 0.5s ease; 
+}
+
 .add-note textarea {
   width: 95%;
   height: 80px; /* Slightly smaller height */
@@ -108,10 +114,9 @@
 }
 
 .edit-textarea {
-  width: 95%;
-  margin: 0 10px;
+  width: 99%;
+  margin-right: 10px;
   height: 30px;
-  padding: 10px;
   border-radius: 5px;
   border: none;
   background-color: #333333;
@@ -123,6 +128,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.note-actions select {
+  width: auto;
 }
 
 .note-delete-button, .note-edit-button {

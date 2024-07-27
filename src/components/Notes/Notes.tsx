@@ -8,10 +8,13 @@ import { Note } from './types';
 import AddNote from './AddNote';
 import AddSubject from './AddSubject';
 import NoteCard from './NoteCard';
+import SubjectSelector from './SubjectSelector';
 
 
 const Notes: React.FC = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [ notes, setNotes ] = useState<Note[]>( [] );
+  const [ selectedSubject, setSelectedSubject ] = useState<string>( '' );
+  const [ filteredNotes, setFilteredNotes ] = useState<Note[]>( [] );
   const [user] = useAuthState(auth);
 
   useEffect(() => {
@@ -21,13 +24,26 @@ const Notes: React.FC = () => {
       querySnapshot.forEach((doc) => {
         notesData.push({ id: doc.id, ...doc.data() } as Note);
       });
-      setNotes(notesData);
+      setNotes( notesData );
+      setFilteredNotes( notesData );
     });
 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [] );
+  
+  const filterNotesBySubject = ( subject: string ) =>
+  {
+    setSelectedSubject( subject );
+    if ( !subject )
+    {
+      setFilteredNotes( notes );
+      return;
+    }
+    console.log( subject, notes );
+    setFilteredNotes(notes.filter( note => note.subject === subject ));
+  }
 
   return (
     <div className="notes-container">
@@ -37,8 +53,9 @@ const Notes: React.FC = () => {
           <AddSubject onAdd={() => {}} />
         </div>
       )}
+        <SubjectSelector subject={selectedSubject} onSelect={filterNotesBySubject} />
       <div className="notes-list">
-        {notes.map((note) => (
+        {filteredNotes.map((note) => (
           <NoteCard
             key={note.id}
             note={note}

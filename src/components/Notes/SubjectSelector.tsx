@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { firestore } from "../../firebase";
 
 interface SubjectSelectProps {
-  setSubject: ( subject: string ) => void;
+  onSelect: ( subject: string ) => void;
+  allowAll?: boolean;
   subject: string;
 }
 
-const SubjectSelector = ( { subject, setSubject } : SubjectSelectProps ) =>
+const SubjectSelector: React.FC<SubjectSelectProps> = ({ subject, onSelect, allowAll = true}) =>
 {
   const [subjects, setSubjects] = useState<string[]>([]);
   
@@ -21,8 +22,8 @@ const SubjectSelector = ( { subject, setSubject } : SubjectSelectProps ) =>
     fetchSubjects();
   }, []);
   return (
-    <select value={subject} onChange={(e) => setSubject(e.target.value)}>
-        <option value="" disabled>Select subject</option>
+    <select value={subject} onChange={(e) => onSelect(e.target.value)}>
+      {allowAll && <option value="">All subjects</option>}
         {subjects.map((subject, index) => (
           <option key={index} value={subject}>{subject}</option>
         ))}

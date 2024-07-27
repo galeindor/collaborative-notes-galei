@@ -32,7 +32,7 @@ const AddNote: React.FC = () => {
         onChange={(e) => setContent(e.target.value)}
         placeholder="Write a note..."
       />
-      <SubjectSelector subject={subject} setSubject={setSubject} />
+      <SubjectSelector subject={subject} onSelect={setSubject} />
       <button onClick={handleAddNote}>Add Note</button>
     </div>
   );

@@ -65,9 +65,9 @@ const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
       </div>
       <div className="note-actions">
         {isEditing ? (
-          <SubjectSelector subject={newSubject} setSubject={setNewSubject} />
+          <SubjectSelector subject={newSubject} onSelect={setNewSubject} allowAll= {false} />
         ) : (
-          <p className="note-card-subject">{newSubject}</p>
+          <p className="note-subject">{newSubject}</p>
         )}
         {note.author === user?.uid && (
           <>
