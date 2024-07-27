@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Notes from './components/Notes/Notes';
 import Navbar from './components/Navbar';
-import './index.css';
 import Home from './components/Home';
 
 const App: React.FC = () => (
+  <div className='bg-gray-900 text-white h-screen'>
   <Router>
     <Navbar />
     <Routes>
@@ -14,7 +14,8 @@ const App: React.FC = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/notes" element={<Notes />} />
     </Routes>
-  </Router>
+    </Router>
+  </div>
 );
 
 export default App;

@@ -25,41 +25,39 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, currentUser, onDelete, onEdit
     }
   };
 
-  const toggleEditing = () =>
-  {
-    if ( isEditing )
-    {
-      onEdit( note.id, newContent)
-    }
-    setIsEditing( !isEditing )
-  }
-
   return (
-    <div className="note-item">
+    <div className="flex justify-between items-center p-4 bg-gray-800 rounded-md shadow-md">
       {isEditing ? (
         <textarea
           value={newContent}
           onChange={(e) => setNewContent(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="edit-textarea"
+          className="w-full p-2 bg-gray-700 text-white rounded-md"
+          rows={1}
           autoFocus
         />
       ) : (
-        <p className="note-content">{note.content}</p>
+        <p className="text-white">{note.content}</p>
       )}
-      <div className="note-actions">
+      <div className="flex items-center space-x-2">
         {note.author === currentUser && (
           <>
-            <button className="note-edit-button" onClick={toggleEditing}>
+            <button
+              className="text-blue-500 hover:text-blue-400"
+              onClick={() => setIsEditing(true)}
+            >
               <AiOutlineEdit />
             </button>
-            <button className={`note-delete-button ${isEditing? "edit" : ""}`} onClick={() => onDelete(note.id)}>
+            <button
+              className="text-red-500 hover:text-red-400"
+              onClick={() => onDelete(note.id)}
+            >
               <AiOutlineClose />
             </button>
           </>
         )}
       </div>
-      <p className="note-subject">{note.subject}</p>
+      <p className="text-gray-400">{note.subject}</p>
     </div>
   );
 };

@@ -1,10 +1,9 @@
 import React from 'react';
-import '../index.css';
 
 const Home: React.FC = () => (
-  <div className="center-container">
-    <h1>Welcome to the Note-Taking App</h1>
-    <p>Create, edit, and collaborate on your notes in real-time.</p>
+  <div className="flex flex-col justify-center items-center h-screen text-center bg-gray-900 text-white">
+    <h1 className="text-4xl font-bold mb-4">Welcome to the Note-Taking App</h1>
+    <p className="text-lg">Create, edit, and collaborate on your notes in real-time.</p>
   </div>
 );
 

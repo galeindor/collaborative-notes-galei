@@ -5,3 +5,9 @@ export interface Note {
   author: string;
   subject: string;
 }
+
+export interface Subject
+{
+  id: string;
+  name: string;
+}

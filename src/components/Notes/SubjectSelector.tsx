@@ -1,27 +1,16 @@
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { firestore } from "../../firebase";
+import { Subject } from "./types";
 
-interface SubjectSelectProps {
+interface SubjectSelectProps
+{
   setSubject: ( subject: string ) => void;
   subject: string;
+  subjects: string[];
 }
 
-const SubjectSelector = ( { subject, setSubject } : SubjectSelectProps ) =>
+const SubjectSelector = ( { subjects, subject, setSubject } : SubjectSelectProps ) =>
 {
-  const [subjects, setSubjects] = useState<string[]>([]);
-  
-  useEffect(() => {
-    const fetchSubjects = async () => {
-      const subjectsSnapshot = await getDocs(collection(firestore, 'subjects'));
-      const subjectsList = subjectsSnapshot.docs.map((doc) => doc.data().name);
-      setSubjects(subjectsList);
-    };
-
-    fetchSubjects();
-  }, []);
   return (
-    <select value={subject} onChange={(e) => setSubject(e.target.value)}>
+    <select value={subject} onChange={(e) => setSubject(e.target.value)} className="w-full p-2 bg-gray-700 text-white rounded-md">
         <option value="" disabled>Select subject</option>
         {subjects.map((subject, index) => (
           <option key={index} value={subject}>{subject}</option>

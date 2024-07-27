@@ -1,19 +1,15 @@
-// src/components/Notes.tsx
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, query, onSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { firestore, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import NoteItem from './NoteItem';
-import './notes.css';
-import { Note } from './types';
 import AddNote from './AddNote';
 import AddSubject from './AddSubject';
-
+import { Note } from './types';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
-  const [newSubject, setNewSubject] = useState<string>('');
   const [user] = useAuthState(auth);
 
   useEffect(() => {
@@ -31,7 +27,7 @@ const Notes: React.FC = () => {
     const unsubscribeSubjects = onSnapshot(subjectsQuery, (querySnapshot) => {
       const subjectsData: string[] = [];
       querySnapshot.forEach((doc) => {
-        subjectsData.push(doc.id);
+        subjectsData.push(doc.data().name);
       });
       setSubjects(subjectsData);
     });
@@ -47,18 +43,16 @@ const Notes: React.FC = () => {
   };
 
   const handleEditNote = async (id: string, newContent: string) => {
-    await updateDoc(doc(firestore, 'notes', id), { content: newContent });
+    await setDoc(doc(firestore, 'notes', id), { content: newContent }, { merge: true });
   };
 
   return (
-    <div className="notes-container">
-      {user && (
-        <div className="add-note-subject-container">
-          <AddNote />
-          <AddSubject onAdd={() => {}} />
-        </div>
-      )}
-      <div className="notes-list">
+    <div className="p-4">
+      { user && <div className="flex gap-4 mb-4">
+        <AddNote subjects={subjects} />
+        <AddSubject subjects={subjects} />
+      </div>}
+      <div className="space-y-4">
         {notes.map((note) => (
           <NoteItem
             key={note.id}
